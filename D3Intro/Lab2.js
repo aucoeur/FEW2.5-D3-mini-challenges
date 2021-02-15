@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 /*
-Example One: This example will place an svg circle in the center of the svg elelment,
+Example One: This example will place an svg circle in the center of the svg element,
 Will give it a a radius of 100 pixels and fill it with a red colour
 */
 
@@ -22,15 +22,62 @@ d3.select('svg#example1')
   .attr('cx', 150)
   .attr('cy', 150)
   .attr('r', 100)
+  .attr('opacity', 0.5)
   .attr('fill', 'red');
 
-/* 
+/*
 TODO 2: Draw an SVG Lollipop chart with the following attributes:
   line: x1 = 100, y1=100, x2=300, y2=100 stroke=black
   circle: cx=300, cy=100, r=3
-  text: x=100, y=90, content="Lolliport Chart"
+  text: x=100, y=90, content="Lollipop Chart"
 */
 
+d3.select('#svgVisuals')
+  .append('div')
+  .attr('id', 'lollipopChart')
+  .append('h2')
+  .text('Lollipop Chart');
+
+const svg = d3.select('#lollipopChart')
+  .append('svg')
+  .attr('width', 350)
+  .attr('height', 350);
+
+// Add XY Axis
+svg.append('line')
+  .attr('id', 'xAxis')
+  .attr('x1', 100)
+  .attr('y1', 150)
+  .attr('x2', 100)
+  .attr('y2', 0)
+  .attr('stroke', 'blue')
+  .attr('stroke-width', 2);
+
+svg.append('line')
+  .attr('id', 'yAxis')
+  .attr('x1', 100)
+  .attr('y1', 150)
+  .attr('x2', 350)
+  .attr('y2', 150)
+  .attr('stroke', 'blue')
+  .attr('stroke-width', 2);
+
+svg.append('line')
+  .attr('x1', 100)
+  .attr('y1', 100)
+  .attr('x2', 300)
+  .attr('y2', 100)
+  .attr('stroke', 'black');
+
+svg.append('circle')
+  .attr('cx', 300)
+  .attr('cy', 100)
+  .attr('r', 3);
+
+svg.append('text')
+  .attr('x', 110)
+  .attr('y', 90)
+  .text('Lollipop Chart');
 
 /*
 TODO 3: Draw an SVG Line with the following attributes:
@@ -42,6 +89,23 @@ TODO 3: Draw an SVG Line with the following attributes:
     stroke=rgb(255, 0, 0),
     stroke-width=4
 */
+d3.select('#svgVisuals')
+  .append('div')
+  .attr('id', 'redLine')
+  .append('h2')
+  .text('Red Line');
+
+d3.select('#svgVisuals')
+  .append('svg')
+  .attr('width', 300)
+  .attr('height', 300)
+  .append('line')
+  .attr('x1', 100)
+  .attr('y1', 100)
+  .attr('x2', 200)
+  .attr('y2', 200)
+  .attr('stroke', 'rgb(255, 0, 0)')
+  .attr('stroke-width', 4);
 
 /*
 TODO 4: Draw an SVG Rectangle with the following attributes:
@@ -52,8 +116,22 @@ TODO 4: Draw an SVG Rectangle with the following attributes:
   height=100,
   fill=green
 */
+d3.select('#svgVisuals')
+  .append('h2')
+  .text('Green Rectangle');
 
-/* 
+d3.select('#svgVisuals')
+  .append('svg')
+  .attr('width', 300)
+  .attr('height', 300)
+  .append('rect')
+  .attr('x', 20)
+  .attr('y', 20)
+  .attr('width', 200)
+  .attr('height', 100)
+  .attr('fill', 'green');
+
+/*
 Example Two: Simple Bar Chart showing ticket slaes for each conference in sales.json
   The bars are rect svg elements and have attributes x,y, height, width and fill color.
  */
@@ -106,8 +184,41 @@ TOD0 5:
   Display a simple Bar Graph like the example above
   It should show the US viewership numbers for each title in 'data/viewership.json'
    */
+d3.select('#dataBinding')
+  .append('div')
+  .append('h2')
+  .text('Viewership');
+
+d3.select('#dataBinding')
+  .append('svg')
+  .attr('id', 'Viewership')
+  .attr('width', 500)
+  .attr('height', 500);
+
 d3.json('../data/viewership.json')
-  .then();
+  .then((data) => {
+    d3.select('#Viewership')
+      .selectAll('rect')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('x', 0)
+      .attr('height', 20)
+      .attr('y', (_, idx) => idx * 30)
+      .attr('width', (val) => (val.USViewers * 2.5))
+      .attr('fill', 'blue');
+
+    d3.select('#Viewership')
+      .selectAll('text')
+      .data(data)
+      .enter()
+      .append('text')
+      .attr('x', 2)
+      .attr('y', (val, idx) => (idx * 30) + 15)
+      .attr('font-size', '15px')
+      .text((val) => `${val.Title}: ${val.USViewers} viewers`)
+      .attr('fill', 'white');
+  });
 
 /*
 Example 3: Drawing a Line Chart with D3
@@ -148,7 +259,7 @@ d3.json('../data/monthlySales.json')
       .attr('dy', '.35em');
   });
 
-/* 
+/*
 TODO 6:
   Draw a Line Chart like the example above.
   It should display the US Viewership numbers for episode in 'data/viewership.json'
@@ -207,7 +318,7 @@ d3.json('../data/monthlySales.json')
   });
 
 /*  TODO 7: Draw a simple scatter plot with D3
-  It should display the US Viewership numbers for episode in 'data/viewership.json' 
+  It should display the US Viewership numbers for episode in 'data/viewership.json'
 */
 
 d3.json('../data/viewership.json')

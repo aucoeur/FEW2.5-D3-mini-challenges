@@ -36,41 +36,41 @@ d3.select('#lastDiv')
   Display the conference name in an element for each item.
 */
 
-// d3.json('../data/sales.json')
-//   .then((data) => {
-//     d3.select('#conf')
-//       .selectAll('div')
-//       .data(data)
-//       .enter()
-//       .append('div')
-//       // set the text for each div
-//       .text((f) => `${f.conference_name}`)
-//       // add a style for each div
-//       .style('font-weight', 'bold')
-//       .style('color', 'blue');
-//   });
+d3.json('../data/sales.json')
+  .then((data) => {
+    d3.select('#sales-data')
+      .selectAll('div')
+      .data(data)
+      .enter()
+      .append('div')
+      // set the text for each div
+      .text((f) => `${f.conference_name}`)
+      // add a style for each div
+      .style('font-weight', 'bold')
+      .style('color', 'blue');
+  });
 
-// /*
-//   TODO 2:
-//   Load the monthly sales data. Display the month and the sales amount.
-//   Stretch: Make each month a different color.
-// */
+/*
+  TODO 2:
+  Load the monthly sales data. Display the month and the sales amount.
+  Stretch: Make each month a different color.
+*/
 
-// d3.json('../data/monthlySales.json')
-//   .then((data) => {
-//     // Scale/map data to color scheme
-//     const colors = d3.scaleOrdinal()
-//       .domain(data)
-//       .range(d3.schemePaired);
+d3.json('../data/monthlySales.json')
+  .then((data) => {
+    // Scale/map data to color scheme
+    const colors = d3.scaleOrdinal()
+      .domain(data)
+      .range(d3.schemePaired);
 
-//     d3.select('#sales-data')
-//       .selectAll('div')
-//       .data(data)
-//       .enter()
-//       .append('div')
-//       .text((m) => `${m.month}: $${m.sales}`)
-//       .style('color', (m) => colors(m.month));
-//   });
+    d3.select('#monthly-sales-data')
+      .selectAll('div')
+      .data(data)
+      .enter()
+      .append('div')
+      .text((m) => `${m.month}: $${m.sales}`)
+      .style('color', (m) => colors(m.month));
+  });
 
 /*
   Challenge:
