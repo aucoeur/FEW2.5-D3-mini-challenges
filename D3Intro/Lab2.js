@@ -253,7 +253,7 @@ d3.json('../data/monthlySales.json')
       .text((val) => val.sales)
       .attr('x', (val) => val.month * 25)
       .attr('y', (val) => lineHeight - val.sales)
-      .attr('font-sizwe', '12px')
+      .attr('font-size', '12px')
       .attr('fill', '#666666')
       .attr('text-ancchor', 'start')
       .attr('dy', '.35em');
